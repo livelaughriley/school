@@ -1,0 +1,61 @@
+---
+title: 'Problem Set Five'
+author: 'Riley Roach'
+output: word_document
+---
+
+``` {r echo=TRUE}
+library(tidyverse)
+library(olsrr)
+meapsingle<-
+   read.csv('meapsingle.csv')
+str(meapsingle)
+```
+#Part I
+```{r}
+attach(meapsingle)
+q_one_model<-
+   lm(math4~pctsgle,
+      meapsingle)
+summary(q_one_model)
+library(tidyverse)
+ggplot(meapsingle,
+       aes(x=pctsgle,
+           y=math4)) +
+   geom_smooth()
+```
+The effect of single parenthood seems rather large.
+
+#Part II
+```{r}
+q_two_model<-
+   lm(math4~pctsgle +
+         lmedinc +
+         free,
+         meapsingle)
+summary(q_two_model)
+par(mfrow=c(2,2))
+plot((lm(pctsgle~lmedinc)))
+plot((lm(pctsgle~free)))
+ols_coll_diag(q_two_model)
+```
+The coefficient increases. The reason for this, when looking at the residual plots, is that *free* appears to be multicollinear with *pctsgle*. Also, the VIF of *single* is rather high and needs further investigation.
+
+#Part III
+```{r}
+q_three_model<-
+   lm(lmedinc~free,
+      meapsingle)
+summary(q_three_model)      
+```
+This is the sign I expected. The correlation is highly significant, meaning that the two are influential on one another.
+
+#Part IV
+Yes, one of the variables should be dropped, although choosing which variable to omit requires further analysis.
+
+#Part V
+```{r}
+ols_coll_diag(q_two_model)
+```
+The *pctsgle* variable reports the highest VIF. Also, the tolerance is low, meaning that only a small amount of the collected data can be used for an unbiased model.
+This does suggest that a different model should be used. A variable more narrow may provide better analysis.

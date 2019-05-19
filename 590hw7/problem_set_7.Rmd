@@ -1,0 +1,112 @@
+---
+title: "Problem Set 07"
+author: "Riley Roach"
+output:
+    html_document:
+      highlight: kate
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+```{r}
+load('~/Datasets/wooldridge/data/nbasal.RData')
+library(tidyverse)
+library(tidytext)
+library(texreg)
+library(broom)
+library(car)
+attach(nbasal)
+library(car)
+library(broom)
+```
+
+
+
+
+#Part I
+
+```{r results='asis'}
+model_i <-
+    lm(points ~
+           exper +
+           expersq +
+           age +
+           coll,
+       nbasal)
+htmlreg(model_i, stars = c(0.01, 0.05, 0.10), star.symbol = "\\*", custom.model.names = "Model 1", caption = "Part (i) Model Results", caption.above = TRUE,
+        doctype = FALSE)
+
+```
+
+# Part II
+The value of experience decreases the points-per-game at 16 years. This makes sense, since at 16 years of age, players are worn down.
+```{r}
+results_i <- tidy(model_i)
+exper_i <-
+    results_i %>%
+    filter(term == 'exper') %>%
+    select(estimate)
+expersq_i <-
+    results_i %>%
+    filter(term == 'expersq') %>%
+    select(estimate)
+exper_max <- (-1 * exper_i) / (2 * expersq_i)
+exper_max
+```
+Moreover, a small number would indicate that players have short careers.
+
+#Part III
+```{r}
+summary(model_i)
+```
+A possible reason for *coll* having a negative statistically significant coefficient is that players who are likely to be elite in the NBA often enter the NBA before finishing college.
+
+#Part VI
+```{r eval = FALSE}
+model_vi <-
+    lm(points ~
+           exper +
+           expersq +
+           age +
+           agesq +
+           coll,
+       nbasal)
+htmlreg(model_vi,
+        stars = c(0.01, 0.05, 0.10),
+        star.symbol = "\\*",
+        custom.model.names = "Model 1",
+        caption = "Part (i) Model Results",
+        caption.above = TRUE,
+        doctype = FALSE)
+```
+The results suggest that adding a quadratic *age* variable is unnecessary. This is because *coll* and *exper* are influenced by age, as larger *coll*s and *exper*s require the player to have a higher age.
+
+#Part V
+```{r}
+model_v <-
+    lm(lwage ~
+           points +
+           exper +
+           expersq +
+           age +
+           coll,
+       nbasal)
+
+```
+
+
+#Part VI
+```{r}
+model_vi_test <-
+    linearHypothesis(model_v,
+                     c('age = 0',
+                       'coll = 0'))
+model_vi_test
+```
+
+The above test implies that *coll* and *age* are not jointly significant. This implies that the variables, *points*, *exper* and *expersq* have such an influence that age and education are not important here.
+
+

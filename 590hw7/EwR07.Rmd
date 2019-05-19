@@ -1,0 +1,47 @@
+---
+title: "Econometrics with R - Problem 07"
+author: "Author"
+date: "March 28, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Problem Introduction
+
+The data set **nbasal** contains salary information and career statistics for 269 players in the National Basketball Association (NBA).
+
+
+# Part (i)
+
+Estimate a model relating points-per-game ($points$) to years in the league ($exper$), $age$, and years played in college ($coll$). Include a quadratic in $exper$; the other variables should appear in level form. Report the results in the usual way.
+
+
+# Part (ii)
+
+Holding college years and age fixed, at what value of experience does the next year of experience actually reduce points-per-game? Does this make sense?
+
+
+# Part (iii)
+
+Why do you think $coll$ has a negative and statistically significant coefficient? (*Hint*: NBA players can be drafted before finishing their college careers and even directly out of high
+school.)
+
+
+# Part (iv)
+
+Add a quadratic in $age$ to the equation. Is it needed? What does this appear to imply about the effects of age, once experience and education are controlled for?
+
+
+# Part (v)
+
+Now regress $\log(wage)$ on $points$, $exper$, $exper^2$, $age$, and $coll$. Report the results in the usual format.
+
+
+# part (vi)
+
+Test whether $age$ and $coll$ are jointly significant in the regression from part (v). What does this imply about whether age and education have separate effects on wage, once productivity and
+seniority are accounted for?

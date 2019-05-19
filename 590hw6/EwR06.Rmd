@@ -1,0 +1,61 @@
+---
+title: "Econometrics with R - Problem 06"
+author: "Ken Brown"
+date: "March 23, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Problem Introduction
+
+The data set **k401ksubs** contains information on net financial wealth ($nettfa$), age of the survey respondent ($age$), annual family income ($inc$), family size ($fsize$), and participation in certain pension plans for people in the United States. The wealth and income variables are both recorded in thousands of dollars. For this question, **use only the data for single-person households** (so $fsize = 1$).
+
+
+
+
+
+
+# Part (i)
+
+How many single-person households are there in the data set?
+
+
+
+
+
+
+# Part (ii)
+
+Use OLS to estimate the model
+$$nettfa = \beta_0 + \beta_1 inc + \beta_2 age + u$$
+and report the results using the usual format. Be sure to use only the single-person households in the sample. Interpret the slope coefficients. Are there any surprises in the slope estimates?
+
+
+
+
+
+
+# Part (iii)
+
+Does the intercept from the regression in part (ii) have an interesting meaning? Explain.
+
+
+
+
+
+
+# Part (iv)
+
+Find the $p$-value for the test $H_0: \beta_2 = 1$ against $H_A: \beta_2 < 1$.  Do you reject $H_0$ at the 1% significance level?
+
+
+
+
+
+
+# Part (v)
+
+If you do a simple regression of $nettfa$ on $inc$, is the estimated coefficient on $inc$ much different from the estimate in part (ii)? Why or why not?

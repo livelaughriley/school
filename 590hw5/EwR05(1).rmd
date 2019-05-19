@@ -1,0 +1,39 @@
+---
+title: "Econometrics with R - Problem 05"
+author: "Ken Brown"
+date: "March 2, 2018"
+output: html_document
+---
+```{r echo=FALSE}
+library(tidyverse)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+meapsingle <- read_csv("meapsingle.csv")
+```
+
+Use the data in MEAPSINGLE to study the effects of single-parent households on student math performance. These data are for a subset of schools in southeast Michigan for the year 2000. The socioeconomic variables are obtained at the ZIP code level (where ZIP code is assigned to schools based on their mailing addresses).
+
+```{r echo=TRUE}
+library(tidyverse)
+str(meapsingle)
+attach(meapsingle)
+```
+
+1. Run the simple regression of $math4$ on $pctsgle$ and report the results in the usual format. Interpret the slope coefficient. Does the effect of single parenthood seem large or small?
+
+```{r echo=TRUE}
+q_one_model<-lm(math4~pctsgle)
+summary(q_one_model)
+```
+2. Add the variables $lmedinc$ and $free$ to the equation. What happens to the coefficient on $pctsgle$?  Explain what is happening.
+
+
+3. Find the sample correlation between $lmedinc$ and $free$. Does it have the sign you expect?
+
+
+4. Does the substantial correlation between $lmedinc$ and $free$ mean that you should drop one from the regression to better estimate the causal effect of single parenthood on student performance? Explain.
+
+
+5. Find the variance inflation factors (VIFs) for each of the explanatory variables appearing in the regression in part (2). Which variable has the largest VIF? Does this knowledge affect the model you would use to study the causal effect of single parenthood on math performance?

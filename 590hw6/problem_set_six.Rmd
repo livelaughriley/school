@@ -1,0 +1,76 @@
+---
+title: 'Problem Set Six'
+author: 'Riley Roach'
+output: word_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+``` {r}
+load("~/RStudioProjects/School Projects/590hw6/wooldridge/data/k401ksubs.RData")
+library(tidyverse)
+library(tidytext)
+library(texreg)
+```
+#Part I
+```{r}
+single_person_households<-
+   table(k401ksubs$fsize==1)
+
+single_person_households
+```
+There are 2017 single-person households.
+
+#Part II
+```{r results='asis'}
+k401ksubs_single <-
+   k401ksubs %>%
+   group_by(fsize) %>%
+   filter(!(fsize!=1))
+
+model_ii <-
+   lm(nettfa ~ inc + age,
+      k401ksubs_single)
+
+summary(model_ii)
+
+library(texreg)
+
+htmlreg(list(model_ii),
+        stars = c(0.01,
+                  0.05,
+                  0.10))
+```
+
+Age being positively correlated to net financial wealth is interesting given that this population consists of single-person households. This may arrise from single-person households spending less income on items that multi-person households utilize.
+
+#Part III
+ 
+The intercept may suggest the "base" cost of living, with controlling all other variables at 0.
+
+#Part IV
+
+```{r}
+summary(model_ii)
+
+p_value_partIV <- 2.2e-16
+```
+
+The *p*-value for the test $H_0$ : $B_2$ = 1 against $H_A$ : $B_2$ < 1 is `r p_value_partIV`. We can reject $H_0$ at the 1% significance level.
+
+#Part V
+```{r results = 'asis'}
+model_v <-
+   lm(nettfa ~ inc,
+      k401ksubs_single)
+
+htmlreg(list(model_ii,
+             model_v),
+        stars = c(0.01,
+                  0.05,
+                  0.10))
+```
+
+The coefficient is not different by much. This suggests that income is not prone to influence from other variables that may be considered for the model.
+

@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1517500590460.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2864896722",
+    "id" : "B9269E1F",
+    "lastKnownWriteTime" : 1517591893,
+    "last_content_update" : 1517591893522,
+    "path" : "~/School Projects/590hw1/590hw1_source.R",
+    "project_path" : "590hw1_source.R",
+    "properties" : {
+        "cursorPosition" : "28,0",
+        "scrollLine" : "14",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : true,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,19 @@
+load("/Users/Riley/Downloads/School Work/590hw1/alcohol.RData")
+library(gmodels)
+attach(data)
+CrossTable(abuse)
+CrossTable(employ)
+prop.table(abuse)
+pct.table<-function(x){
+  x.count<-table(x)
+  100*prop.table(x.count)
+}
+pct.table(employ[abuse==1])
+CrossTable(abuse,
+           employ)
+library(tidyverse)
+ggplot(data,
+       aes(x=abuse,
+           y=employ))+
+  geom_bar(stat="identity")
+newdata<-data

@@ -1,0 +1,100 @@
+---
+title: "Problem Set IV"
+author: "Riley Roach"
+date: "03/25/2018"
+output: 
+  word_document: 
+    highlight: kate
+---
+```
+Setting Up R...
+```
+```{r echo=FALSE}
+load('discrim.RData')
+attach(data)
+library(tidyverse)
+```
+
+
+# Part I
+The mean of *prpblck* and *income* can be determined by the following preparation:
+```{r echo=TRUE, collapse=TRUE}
+summary(cbind(prpblck,
+              income))
+```
+The standard deviation of the *prpblck* and *income* are shown in the following:
+```{r echo=TRUE, collapse=TRUE}
+sd_prpblck<-sd(prpblck,
+               na.rm=TRUE)
+sd_income<-sd(income,
+              na.rm=TRUE)
+cbind(sd_prpblck,
+      sd_income)
+```
+
+*prpblck* is a unit of proportion in the given ZIP code area. *income* is measure of USD represented and is representative of the actual value itself.
+
+# Part II
+The following expression and the results follow, 
+$$psoda=\beta_0 + \beta_1 prblck+ \beta_2 income +u$$
+model.ii<-lm(psoda~prpblck+income)
+summary(model.ii)
+```{r echo=FALSE, collapse=TRUE}
+model.ii<-lm(psoda~prpblck+income)
+summary(model.ii)
+```
+
+The sample size originally is 410 observations, although 9 were removed due to missing values, and another three are non-reporting as a result of applying degrees of freedom to the model. The R-squared value is 0.06422, which is strikingly low.
+
+We can see that the coefficient of *prpblck* is `r round(coef(lm(psoda ~ prpblck + income))[2],3)`. The coefficient corresponding to *income* is `r format(round(coef(lm(psoda ~ prpblck + income))[3],6),scientific=FALSE)`. 
+
+The coefficient for *prpblck* is considerably large. An 11 cent increase is a noticable difference.
+
+# Part III
+
++ Here are the OLS regression results for the simple regression of 'psoda' on *prpblck*,
+```{r echo=FALSE, collapse=TRUE}
+model.iii<-lm(psoda~prpblck)
+summary(model.iii)
+```
+   
+When we included *income*, the coefficient on *prpblck* was `r round(coef(lm(psoda~prpblck+income))[2],3)`, when we omitted *income*, the coefficient on *prpblck* was `r round(coef(lm(psoda~prpblck))[2],3)`. 
+When we omit *income*, the coefficient is nearly halved. The discrimination effect larger when controlling for income.
+
+# Part IV
+The coefficient estimates from the model, $log(psoda)=\beta_0+\beta_1prpblck+\beta_2log(income)+u$, are shown as follows:
+```{r echo=FALSE, collapse=TRUE}
+model.vi<-lm(log(psoda)~prpblck+log(income))
+summary(model.vi)
+```
+
+The resulting percentage change in 'psoda' from a 20 percentage *point* change in *prpblck* can be shown by the following:
+```{r echo=FALSE, collapse=TRUE}
+
+psoda_percentage_change<- function(x) {
+   sum(.12158*(x))
+}
+library(dplyr)
+psoda_percentage_change(20)
+
+```
+
+#Part V
+Here, prppov is added to the model.
+```{r echo=FALSE, collapse=TRUE}
+
+model.vi.2<-lm(log(psoda)~prpblck+log(income)+prppov)
+summary(model.vi.2)
+
+```
+We see a significant decrease in the value of prpblck.
+
+#Part VI
+``` {r echo=TRUE, collapse=FALSE}
+model.v<-lm(log(income)~prppov,data)
+summary(model.v)
+```
+I expected something similar to this.
+
+#Part VII
+This statement is false. The reason being that *log(income)* and *prppov* may encapture variables that otherwise be incorrectly omitted. Furthermore, one of the two variables may be multicolinear to a third variable of which the opposing first or second variable may not be. For example, if *prpblck* is highly correlated to *prppov*, including *log(income)* may lessen that multicolinearity between the two.

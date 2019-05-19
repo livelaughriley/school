@@ -1,0 +1,135 @@
+#TOC {
+   position: fixed;
+   left: 0;
+   top: 0;
+   min-width: 300px;
+   height: auto;
+   margin: auto;
+   overflow: auto;
+   float: left;
+   font-family: helvetica;
+   text-align: left;
+}
+.tocify-header {
+    font-size: 18px;
+    font-family: helvetica;
+    font-variant: small-caps;
+    font-weight: 500;
+}
+.tocify-subheader {
+   font-size: 16px;
+   font-family: helvetica;
+   font-variant: small-caps;
+   font-weight: 500;
+}
+.tocify-item {
+   font-size: 16px;
+   font-family: helvetica;
+   font-variant: small-caps;
+   font-weight: 500;
+}
+ul {
+   font-size: inherit;
+   font-family: helvetica;
+}
+.li {
+   font-size: inherit;
+   font-family: inherit;
+}
+ol {
+   font-family: georgia;
+   font-size: 16px;
+}
+
+
+heading {
+   font-family: helvetica;
+   font-size: 28px;
+   font-variant: small-caps;
+   font-weight: 500;
+}
+h1 {
+   font-family: helvetica;
+   font-size: 22px;
+   font-variant: small-caps;
+   font-weight: 500;
+}
+h2 {
+   font-family: helvetica;
+   font-variant: small-caps;
+   font-size: 20px;
+   padding-bottom: 0;
+   font-weight: 500;
+}
+h3 {
+   font-family: helvetica;
+   font-variant: small-caps;
+   font-size: 18px;
+   padding-bottom: 0;
+   font-weight: bolder;
+}
+
+
+body {
+  position: absolute;
+  overflow: auto;
+  max-width: 1200px;
+  min-width: 800px;
+  margin: auto;
+  margin-left: 80px;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: middle;
+  color: black;
+}
+p {
+   max-width: 800px;
+   margin-left: 10px;
+   font-family: georgia;
+   font-size: 16px;
+   line-height: 1.5;
+}
+button {
+   padding-bottom: 5px;
+}
+code {
+   font-family: courier;
+   font-size: 16px;
+}
+.sourceCode {
+   font-family: courier;
+   font-size: inherit;
+   padding-top: 5px;
+   padding-bottom: 15px;
+   
+}
+
+strong {
+   font-family: georgia;
+}
+
+hr {
+    border-color: black;
+}
+
+.showopt {
+  background-color: #004c93;
+  color: #FFFFFF; 
+  width: 100px;
+  height: 20px;
+  text-align: center;
+  vertical-align: middle !important;
+  float: right;
+  font-family: helvetica;
+  border-radius: 8px;
+  padding-bottom: 10px;
+}
+.showopt:hover {
+    background-color: #dfe4f2;
+    color: #004c93;
+    font-family: helvetica;
+}
+pl {
+  background-color: white !important;
+  font-family: helvetica;
+}

@@ -1,0 +1,114 @@
+---
+title: "Econometrics with R - Problem 09"
+author: "Joshua Bogle"
+date: "April 16, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(tidytext)
+library(tm)
+library(wordcloud)
+library(caret)
+library(gmodels)
+library(e1071)
+
+```
+
+
+# Read in the Data
+
+```{r}
+sms_raw <- read_csv("sms_spam.csv")
+sms_raw %>%
+  slice(1:10)
+```
+
+# Word Clouds
+
+```{r}
+sms_spam <- sms_raw %>%
+  filter(type == "spam")
+sms_ham <- sms_raw %>%
+  filter(type == "ham")
+
+wordcloud(sms_spam$text, max.words = 40, scale = c(5, 1))
+wordcloud(sms_ham$text, max.words = 40, scale = c(4, 1))
+```
+
+# Prep the Data
+
+```{r}
+sms_corpus <- VCorpus(VectorSource(sms_raw$text))
+print(sms_corpus)
+```
+
+## Create Document Term Matrix
+
+```{r}
+sms_dtm <- DocumentTermMatrix(sms_corpus, control = list(
+  tolower = TRUE, 
+  stopwords = TRUE, 
+  removePunctuation = TRUE,
+  removeNumbers = TRUE,
+  stemming = TRUE
+))
+print(sms_dtm)
+
+set.seed(123456)
+
+train_index <- sms_raw$type %>%
+  createDataPartition(p = 0.8, list = FALSE)
+
+sms_dtm_train <- sms_dtm[train_index, ]
+sms_dtm_test <- sms_dtm[-train_index, ]
+sms_train_class <- sms_raw[train_index, ]$type
+sms_test_class <- sms_raw[-train_index, ]$type
+
+prop.table(table(sms_train_class))
+prop.table(table(sms_test_class))
+
+sms_freq_words <- findFreqTerms(sms_dtm_train, 5)
+
+sms_dtm_train_freq <- sms_dtm_train[ , sms_freq_words]
+sms_dtm_test_freq <- sms_dtm_test[ , sms_freq_words]
+
+dim(sms_dtm_train_freq)
+dim(sms_dtm_test_freq)
+
+convert_counts <- function(x) {
+  x <- ifelse(x > 0, TRUE, FALSE)
+}
+
+sms_train <- apply(sms_dtm_train_freq, MARGIN = 2,
+                   convert_counts)
+sms_test <- apply(sms_dtm_test_freq, MARGIN = 2,
+                  convert_counts)
+```
+
+
+# Build the Model
+
+```{r}
+sms_model <- naiveBayes(sms_train, 
+                        as.factor(sms_train_class))
+sms_test_pred <- predict(sms_model, 
+                         as.data.frame(sms_test), type = "class")
+head(sms_test_pred)
+```
+
+
+# Evaluate the Model
+
+```{r}
+CrossTable(sms_test_pred, sms_test_class, 
+           prop.chisq = FALSE, 
+           prop.t = FALSE, 
+           prop.r = FALSE,
+           dnn = c("predicted", "actual")
+           )
+```
+

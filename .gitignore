@@ -1,0 +1,9 @@
+*.docx
+*.doc
+*.pages
+*.pdf
+*.html
+*.csv
+*.xlsx
+
+myprojects/
