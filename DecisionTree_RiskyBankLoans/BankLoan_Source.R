@@ -1,0 +1,31 @@
+library(C50)
+library(partykit)
+library(gmodels)
+credit<-read.csv("~/DecisionTree_RiskyBankLoans/credit.csv")
+str(credit)
+table(credit$checking_balance)
+summary(credit$checking)
+table(factor(credit$default,
+             levels=c("no","yes"),
+             labels=c("N","Y")))
+set.seed(123)
+train_sample<-sample(1000,900)
+credit_train<-credit[train_sample,]
+credit_test<-credit[-train_sample,]
+prop.table(table(credit_train$default))
+prop.table(table(credit_test$default))
+library(C50)
+credit_model<-C5.0(credit_train[-17],
+                  credit_train$default)
+credit_model
+summary(credit_model)
+credit_pred<-predict(credit_model,
+                     credit_test)
+library(gmodels)
+CrossTable(credit_test$default,
+           credit_pred,
+           prop.chisq=FALSE,
+           prop.c=FALSE,
+           prop.r=FALSE,
+           dnn=c('actual default',
+                 'predicted default'))

@@ -1,0 +1,9 @@
+{
+    "path" : "~/mushrooms_dtree",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

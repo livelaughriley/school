@@ -1,0 +1,82 @@
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(klaR)
+library(gmodels)
+sms_raw<-read.csv("~/SMS spam filter/sms_spam.csv",
+                  stringsAsFactors=FALSE)
+sms_raw$type<-factor(sms_raw$type)
+library(tm)
+sms_corpus<-VCorpus(VectorSource(sms_raw$text))
+print(sms_corpus)
+inspect(sms_corpus[1:2])
+sms_corpus_clean<-tm_map(sms_corpus,
+                         content_transformer(tolower))
+as.character(sms_corpus[[1]])
+as.character(sms_corpus_clean[[1]])
+sms_corpus_clean<-tm_map(sms_corpus_clean,
+                         removeNumbers)
+sms_corpus_clean<-tm_map(sms_corpus_clean,
+                         removeWords,
+                         stopwords())
+sms_corpus_clean<-tm_map(sms_corpus_clean,
+                         removePunctuation)
+replacePunctuation<-function(x)
+{gsub("[[:punct:]]+","",x)}
+library(SnowballC)
+wordStem(c("swim","swam","swimming","swims"))
+sms_corpus_clean<-tm_map(sms_corpus_clean,
+                         stemDocument)
+sms_corpus_clean<-tm_map(sms_corpus_clean,
+                         stripWhitespace)
+sms_dtm<-DocumentTermMatrix(sms_corpus_clean)
+sms_dtm2<-DocumentTermMatrix(sms_corpus,
+                             control=list(tolower=T,
+                                          removeNumbers=T,
+                                          stopwords=T,
+                                          removePunctuation=T,
+                                          stemming=T))
+sms_dtm_train<-sms_dtm[1:4169,]
+sms_dtm_test<-sms_dtm[4170:5559,]
+sms_train_labels<-sms_raw[1:4169,]$type
+sms_test_labels<-sms_raw[4170:5559,]$type
+library(wordcloud)
+wordcloud(sms_corpus_clean,
+          min.freq=50,
+          scale=c(5,.2),
+          random.order=FALSE,
+          colors="blue")
+spam<-subset(sms_raw,type=="spam")
+ham<-subset(sms_raw,type=="ham")
+wordcloud(ham$text,
+          max.words=40,
+          scale=c(3,0.5))
+wordcloud(spam$text,
+          max.words=40,
+          scale=c(3,0.5))
+findFreqTerms(sms_dtm_train,5)
+sms_freq_words<-findFreqTerms(sms_dtm_train,5)
+sms_dtm_freq_train<-sms_dtm_train[,sms_freq_words]
+sms_dtm_freq_test<-sms_dtm_test[,sms_freq_words]
+str(sms_freq_words)
+library(e1071)
+library(klaR)
+convert_counts<-function(x)
+{x<-ifelse(x>0,"Yes","No")}
+sms_train<-apply(sms_dtm_freq_train,
+                 MARGIN=2,
+                 convert_counts)
+str(sms_train)
+sms_test<-apply(sms_dtm_freq_test,
+                MARGIN=2,
+                convert_counts)
+str(sms_test)
+sms_classifier<-naiveBayes(sms_train,
+                           sms_train_labels)
+library(gmodels)
+sms_test_pred<-predict(sms_classifier,
+                          sms_test)
+CrossTable(sms_test_pred,
+           sms_test_labels,
+           prop.chisq=FALSE,
+           dnn=c('predicted','actual'))

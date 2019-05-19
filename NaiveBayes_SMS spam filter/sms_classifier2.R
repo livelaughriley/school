@@ -1,0 +1,22 @@
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(klaR)
+library(gmodels)
+sms_classifier2<-naiveBayes(sms_train,
+                           sms_train_labels,
+                           laplace=1)
+sms_test_pred2<-predict(sms_classifier2,
+                        sms_test)
+CrossTable(sms_test_pred2,
+           sms_test_labels,
+           prop.chisq=FALSE,
+           dnn=c('predicted','actual'))
+sms_knn_pred<-knn(train=sms_dtm_freq_train,
+             test=sms_dtm_freq_test,
+             cl=sms_train_labels,
+             k=1)
+CrossTable(sms_knn_pred,
+           sms_test_labels,
+           prop.chisq=FALSE,
+           dnn=c('predicted','actual'))

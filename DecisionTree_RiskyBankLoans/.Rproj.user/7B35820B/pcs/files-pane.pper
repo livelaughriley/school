@@ -1,0 +1,9 @@
+{
+    "path" : "~/DecisionTree_RiskyBankLoans",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "path" : "~/Desktop/Research/MedicalCost~HealthcareExpenditure",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

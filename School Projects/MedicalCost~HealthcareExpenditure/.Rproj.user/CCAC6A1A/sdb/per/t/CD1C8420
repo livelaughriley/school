@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "library(tidyverse,ggplot2)\ntmcmodel<-lm(TMC~PerCapita+PuGDP+PrGDP+PuTHE,data=Exp)\nggplot(data=Exp)+geom_point(mapping=aes(x=PerCapita,y=TMC))\ntmcmodel\nsummary(tmcmodel)\nggplot(data=Exp)+geom_smooth(mapping=aes(x=PuTHE,y=TMC))\nlibrary(scales)\nggplot(data=Exp)+geom_smooth(mapping=aes(x=PuTHE,y=TMC),se=FALSE)+scale_y_continuous(labels=dollar)+expand_limits(x=c(48.3,85.5),y=c(0,3000000))\nggplot(data=Exp)+geom_smooth(mapping=aes(x=PrGDP,y=PuGDP))\nggplot(data=Exp)+geom_smooth(mapping=aes(x=PerCapita,y=TMC),se=FALSE)+scale_y_continuous(labels=dollar)+scale_x_continuous(labels=dollar)\nggplot(data=Exp)+geom_smooth(mapping=aes(x=PuGDP,y=TMC),se=FALSE)+scale_y_continuous(labels=dollar)+scale_x_continuous()\nggplot(data=Exp)+geom_smooth(mapping=aes(x=PrGDP,y=TMC),se=FALSE)+scale_y_continuous(labels=dollar)+scale_x_continuous()\nggplot(data=Exp)+geom_point(mapping=aes(x=PuTHE,y=TMC,color=Country))+geom_smooth(mapping=aes(x=PuTHE,y=TMC),se=FALSE)+scale_y_continuous(labels=dollar)+scale_x_continuous()\nggplot(data=Exp)+geom_point(mapping=aes(x=PrGDP,y=TMC,color=Country))+geom_smooth(mapping=aes(x=PrGDP,y=TMC),se=FALSE)+scale_y_continuous(labels=comma) +scale_x_continuous()\nggplot(data=Exp)+geom_point(mapping=aes(x=PrGDP,y=PuTHE,color=Country))+geom_smooth(mapping=aes(x=PrGDP,y=PuTHE),se=FALSE)\nggplot(data=Exp)+geom_point(mapping=aes(x=PrGDP,y=PuTHE,color=Country))+geom_smooth(mapping=aes(x=PrGDP,y=PuTHE),se=FALSE)\nmgmodel<-lm(MedGoods~PerCapita+PuGDP+PrGDP+PuTHE,data=Exp)\nsummary(mgmodel)\nggplot(data=Exp)+geom_smooth(mapping=aes(x=PerCapita,y=MedGoods,color=Country),se=FALSE)+geom_point(mapping=aes(x=PerCapita,y=MedGoods,color=Country))+scale_y_continuous(labels=dollar)\nggplot(data=Exp)+geom_smooth(mapping=aes(x=PuTHE,y=MedGoods),se=FALSE)+geom_point(mapping=aes(x=PuTHE,y=MedGoods,color=Country))+scale_y_continuous(labels=dollar)\nggplot(data=Exp)+geom_point(mapping=aes(x=PrGDP,y=TMC,color=Country))+geom_smooth(mapping=aes(x=PrGDP,y=TMC),se=FALSE)+scale_y_continuous(labels=comma) +scale_x_continuous()\nggplot(data=Exp)+geom_point(mapping=aes(x=PrGDP,y=MedGoods,color=Country))+geom_smooth(mapping=aes(x=PrGDP,y=MedGoods),se=FALSE)+scale_y_continuous(labels=comma) +scale_x_continuous()\n",
+    "created" : 1508345868843.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1784453597",
+    "id" : "CD1C8420",
+    "lastKnownWriteTime" : 1511145139,
+    "last_content_update" : 1511145139077,
+    "path" : "~/Desktop/Research/MedicalCost~HealthcareExpenditure/MedicalCost~HealthcareExpenditure.R",
+    "project_path" : "MedicalCost~HealthcareExpenditure.R",
+    "properties" : {
+        "docOutlineVisible" : "0",
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

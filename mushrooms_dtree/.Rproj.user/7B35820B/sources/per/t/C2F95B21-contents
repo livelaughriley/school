@@ -1,0 +1,39 @@
+setwd("~/mushrooms_dtree")
+mushrooms<-read.csv("~/mushrooms_dtree/mushrooms.csv")
+mushrooms[,17]
+mushrooms<-mushrooms[,-17]
+str(mushrooms)
+prop.table(table(mushrooms$type))
+set.seed(500)
+train_sample<-sample(8124,5000)
+mushroom_train<-mushrooms[train_sample,]
+mushroom_test<-mushrooms[-train_sample,]
+prop.table(table(mushroom_train$type))
+prop.table(table(mushroom_test$type))
+library(C50)
+m_model<-C5.0(mushroom_train[-1],
+              mushroom_train$type)
+m_model
+summary(m_model)
+m_predict<-predict(m_model,
+        mushroom_test)
+library(gmodels)
+CrossTable(mushroom_test$type,
+           m_predict,
+           prop.r=FALSE,
+           prop.c=FALSE,
+           prop.chisq=FALSE)
+train_sample2<-sample(8124,1000)
+mushroom_train2<-mushrooms[train_sample2,]
+mushroom_test2<-mushrooms[-train_sample2,]
+prop.table(table(mushroom_test2$type))
+prop.table(table(mushroom_train2$type))
+m2_model<-C5.0(mushroom_train2[-1],
+     mushroom_train2$type)
+m2_predict<-predict(m2_model,
+                    mushroom_test2)
+CrossTable(mushroom_test2$type,
+           m2_predict,
+           prop.c=FALSE,
+           prop.r=FALSE,
+           prop.chisq=FALSE)
